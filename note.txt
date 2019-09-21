@@ -1,0 +1,47 @@
+m 增删改查，里面不做数据处理 model
+v 视图前端html  view
+c 数据处理，控制器，结合了M和V层 controller 
+博客表
+create table if not exists blog_blog(
+`id` int unsigned key auto_increment comment 'id',
+`uid` int unsigned not null default 0 comment '用户id',
+`title` varchar(255) not null default '' comment '博客标题',
+`image` varchar(255) not null default '' comment '博客图片',
+`content` mediumtext not null comment '内容',
+`view` int unsigned not null default 0 comment '阅读量',
+`created` int unsigned not null default 0 comment '创建时间',
+`updated` int unsigned not null default 0 comment '更新实时间' 
+)engine = innodb default charset = utf8;
+
+查看博客：
+?c=blog&a=detail&bid={$value.id}
+查看博客的所有信息
+tpl里面加一个评论框
+评论表
+id  博客id 评论用户id  评论内容 创建时间
+
+修改内容
+?c=blog&a=editblog&bid={$value.id}
+1.获取原文件内容
+2.根据原文件内容进行修改
+
+3.完成博客列表页面
+在blogmodel里面添加了3个方法
+1.用于获取所有博客
+  标题
+  内容 100个字体以内
+  作者：aaa  阅读量：10  发布时间：年月日
+2.阅读量在前5的排行榜
+3.创建时间为前5的排行榜
+在blogc层中添加list方法  分别取货model层的3个方法
+
+评论表
+create table if not exists blog_comment(
+`id` int unsigned key auto_increment comment '主键id',
+`bid` int unsigned not null default 0 comment '博客id',
+`uid` int unsigned not null default 0 comment '用户id',
+`content` text not null comment '评论内容',
+`created` int unsigned not null default 0 comment '创建时间'
+)engine=innodb default charset=utf8;
+
+试着把评论内容显示在提交评论下方，uid 评论内容
